@@ -1,0 +1,25 @@
+{
+  "receiving": [
+    {
+      "player_id": "8f22eb36-5282-407a-b6f9-f9b62e5f7318",
+      "entry_id": "8f22eb36-5282-407a-b6f9-f9b62e5f73182014REG4re",
+      "name": "Ahmad Bradshaw",
+      "position": "RB",
+      "yds": "20",
+      "tds": "1",
+      "rec": "2"
+    }
+  ],
+  "rushing": [
+    {
+      "player_id": "8f22eb36-5282-407a-b6f9-f9b62e5f7318",
+      "entry_id": "8f22eb36-5282-407a-b6f9-f9b62e5f73182014REG4ru",
+      "name": "Ahmad Bradshaw",
+      "position": "RB",
+      "yds": "32",
+      "att": "9",
+      "tds": "0",
+      "fum": "0"
+    }
+  ]
+}
