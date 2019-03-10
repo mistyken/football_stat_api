@@ -1,0 +1,2 @@
+class KickingsController < ApplicationController
+end

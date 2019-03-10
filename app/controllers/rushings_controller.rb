@@ -1,0 +1,2 @@
+class RushingsController < ApplicationController
+end
