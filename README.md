@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sample API app to retrieve football player stats. 
+
+Implemented with examples from https://scotch.io/tutorials/build-a-restful-json-api-with-rails-5-part-one
 
 Things you may want to cover:
 
 * Ruby version
-
-* System dependencies
+    - Ruby 2.3.1
+    - Rails 5.2.2
 
 * Configuration
+    - bundle install
 
-* Database creation
-
-* Database initialization
+* Database creation & initialization
+    - rails db:migrate
 
 * How to run the test suite
+    - bundle exec rspec
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

@@ -1,11 +1,11 @@
 # spec/factories/passings.rb
 FactoryBot.define do
   factory :Passing do
-    yds rand(30)
-    att rand(30)
-    tds rand(30)
-    cmp rand(30)
-    int rand(30)
-    player_id nil
+    yds { Faker::Number.between(1, 100) }
+    att { Faker::Number.between(1, 100) }
+    tds { Faker::Number.between(1, 100) }
+    cmp { Faker::Number.between(1, 100) }
+    int { Faker::Number.between(1, 100) }
+    player_id { Faker::Number.between(1, 10000) }
   end
 end
