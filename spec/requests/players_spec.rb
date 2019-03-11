@@ -67,6 +67,33 @@ RSpec.describe 'Players API', type: :request do
       end
     end
 
+    context 'when player with same name is entered again' do
+      before { post '/players', params: valid_attributes }
+      before { get '/players' }
+
+      it 'it should not create an additional player' do
+        expect(json.size).to eq(11)
+      end
+    end
+
+    context 'when player with same pid is entered again' do
+      before { post '/players', params: { name: 'Jack Ma', position: 'QA', pid: 'ABCDE', eid: 'ETF' } }
+      before { get '/players' }
+
+      it 'it should not create an additional player' do
+        expect(json.size).to eq(11)
+      end
+    end
+
+    context 'when player with same eid is entered again' do
+      before { post '/players', params: { name: 'Jack Ma', position: 'QA', pid: 'ETF', eid: 'EFGHI' } }
+      before { get '/players' }
+
+      it 'it should not create an additional player' do
+        expect(json.size).to eq(11)
+      end
+    end
+
     context 'when the request is invalid' do
       before { post '/players', params: { name: 'Michael Jackson' } }
 
