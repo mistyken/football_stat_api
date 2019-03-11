@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_10_191344) do
+ActiveRecord::Schema.define(version: 2019_03_11_034901) do
 
   create_table "kickings", force: :cascade do |t|
-    t.integer "fld_goals_made"
-    t.integer "fld_goals_att"
-    t.integer "extra_pt_made"
-    t.integer "extra_pt_att"
+    t.string "fld_goals_made"
+    t.string "fld_goals_att"
+    t.string "extra_pt_made"
+    t.string "extra_pt_att"
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,11 +24,11 @@ ActiveRecord::Schema.define(version: 2019_03_10_191344) do
   end
 
   create_table "passings", force: :cascade do |t|
-    t.integer "yds"
-    t.integer "att"
-    t.integer "tds"
-    t.integer "cmp"
-    t.integer "int"
+    t.string "yds"
+    t.string "att"
+    t.string "tds"
+    t.string "cmp"
+    t.string "int"
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -45,9 +45,9 @@ ActiveRecord::Schema.define(version: 2019_03_10_191344) do
   end
 
   create_table "receivings", force: :cascade do |t|
-    t.integer "yds"
-    t.integer "tds"
-    t.integer "rec"
+    t.string "yds"
+    t.string "tds"
+    t.string "rec"
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -55,10 +55,10 @@ ActiveRecord::Schema.define(version: 2019_03_10_191344) do
   end
 
   create_table "rushings", force: :cascade do |t|
-    t.integer "yds"
-    t.integer "att"
-    t.integer "tds"
-    t.integer "fum"
+    t.string "yds"
+    t.string "att"
+    t.string "tds"
+    t.string "fum"
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

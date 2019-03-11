@@ -100,7 +100,7 @@ RSpec.describe 'Passings API' do
 
       it 'updates the passing' do
         updated_passing = Passing.find(id)
-        expect(updated_passing.int).to be == 15
+        expect(updated_passing.int).to eql("15")
       end
     end
 

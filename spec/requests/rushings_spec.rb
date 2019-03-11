@@ -100,7 +100,7 @@ RSpec.describe 'Rushings API' do
 
       it 'updates the rushing' do
         updated_rushing = Rushing.find(id)
-        expect(updated_rushing.yds).to be == 30
+        expect(updated_rushing.yds).to eql("30")
       end
     end
 
