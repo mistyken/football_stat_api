@@ -100,7 +100,7 @@ RSpec.describe 'Receivings API' do
 
       it 'updates the receiving' do
         updated_receiving = Receiving.find(id)
-        expect(updated_receiving.rec).to be == 15
+        expect(updated_receiving.rec).to eql("15")
       end
     end
 

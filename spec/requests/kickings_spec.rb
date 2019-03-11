@@ -100,7 +100,7 @@ RSpec.describe 'Kickings API' do
 
       it 'updates the kicking' do
         updated_kicking = Kicking.find(id)
-        expect(updated_kicking.fld_goals_att).to be == 15
+        expect(updated_kicking.fld_goals_att).to eql("15")
       end
     end
 

@@ -9,7 +9,8 @@ class PlayersController < ApplicationController
 
   # POST /players
   def create
-    @player = Player.create!(player_params)
+    @player = Player.where("name = ? OR pid = ? OR eid = ?",
+                       player_params[:name], player_params[:pid], player_params[:eid]).first_or_create!(player_params)
     json_response(@player, :created)
   end
 
