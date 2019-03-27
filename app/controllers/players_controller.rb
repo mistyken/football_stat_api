@@ -3,7 +3,7 @@ class PlayersController < ApplicationController
 
   # GET /players
   def index
-    @players = Player.all
+    @players = Player.by_player_name(params[:name])
     json_response(@players)
   end
 
