@@ -7,4 +7,6 @@ class Player < ApplicationRecord
 
   # validations
   validates_presence_of :name, :position, :pid, :eid
+
+  scope :by_player_name, -> (name) { where(name: name) if name.present? }
 end
