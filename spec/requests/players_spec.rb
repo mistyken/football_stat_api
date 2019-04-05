@@ -27,9 +27,9 @@ RSpec.describe 'Players API', type: :request do
 
   describe 'GET /players?name=' do
     let!(:rushing) { create(:Rushing, player_id: player_id) }
-    before { get "/players?name=#{player_name}" }
 
     context 'when looking for a specific player by name' do
+      before { get "/players?name=#{player_name}" }
       it 'returns the player' do
         expect(json.size).to eq(1)
         expect(json.first['name']).to eq(player_name)
@@ -41,6 +41,19 @@ RSpec.describe 'Players API', type: :request do
 
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when looking for more than one player by name' do
+      let(:player_name_2) {players.last.name}
+      before { get "/players?name=#{player_name},#{player_name_2}"}
+      it 'returns two players' do
+        expect(json.size).to eq(2)
+      end
+
+      it 'should return two correct user names' do
+        expect(json.first['name']).to eq(player_name)
+        expect(json.last['name']).to eq(player_name_2)
       end
     end
   end
@@ -94,7 +107,7 @@ RSpec.describe 'Players API', type: :request do
       before {post '/players', params: valid_attributes}
       before {get '/players'}
 
-      it 'it should not create an additional player' do
+      it 'should not create an additional player' do
         expect(json.size).to eq(11)
       end
     end
@@ -103,7 +116,7 @@ RSpec.describe 'Players API', type: :request do
       before {post '/players', params: {name: 'Jack Ma', position: 'QA', pid: 'ABCDE', eid: 'ETF'}}
       before {get '/players'}
 
-      it 'it should not create an additional player' do
+      it 'should not create an additional player' do
         expect(json.size).to eq(11)
       end
     end

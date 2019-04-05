@@ -3,7 +3,14 @@ class PlayersController < ApplicationController
 
   # GET /players
   def index
-    @players = Player.by_player_name(params[:name])
+    @players = []
+    if params[:name]
+      params[:name].split(',').each do |name|
+        @players.append Player.by_player_name(name)
+      end
+    else
+      @players = Player.all
+    end
     json_response_players(@players)
   end
 
