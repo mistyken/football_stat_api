@@ -4,7 +4,7 @@ class PlayersController < ApplicationController
   # GET /players
   def index
     @players = Player.by_player_name(params[:name])
-    json_response(@players)
+    json_response_players(@players)
   end
 
   # POST /players
@@ -39,6 +39,10 @@ class PlayersController < ApplicationController
   end
 
   def set_player
-    @player = Player.find(params[:id])
+    if params[:name]
+      @player = Player.by_player_name(params[:name]) if params[:name]
+    else
+      @player = Player.find(params[:id])
+    end
   end
 end

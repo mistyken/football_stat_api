@@ -26,12 +26,17 @@ RSpec.describe 'Players API', type: :request do
   end
 
   describe 'GET /players?name=' do
+    let!(:rushing) { create(:Rushing, player_id: player_id) }
     before { get "/players?name=#{player_name}" }
 
-    context 'when looking for a specific player' do
+    context 'when looking for a specific player by name' do
       it 'returns the player' do
         expect(json.size).to eq(1)
         expect(json.first['name']).to eq(player_name)
+        expect(json.first['Rushing'][0]['yds']).to eq(rushing['yds'])
+        expect(json.first['Rushing'][0]['att']).to eq(rushing['att'])
+        expect(json.first['Rushing'][0]['tds']).to eq(rushing['tds'])
+        expect(json.first['Rushing'][0]['fum']).to eq(rushing['fum'])
       end
 
       it 'returns status code 200' do
