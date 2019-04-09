@@ -10,4 +10,5 @@ RSpec.describe Kicking, type: :model do
   it { should validate_presence_of(:fld_goals_att) }
   it { should validate_presence_of(:extra_pt_made) }
   it { should validate_presence_of(:extra_pt_att) }
+  it { should validate_presence_of(:eid) }
 end

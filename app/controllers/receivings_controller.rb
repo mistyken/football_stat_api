@@ -33,7 +33,7 @@ class ReceivingsController < ApplicationController
   private
 
   def receiving_params
-    params.permit(:yds, :tds, :rec)
+    params.permit(:yds, :tds, :rec, :eid)
   end
 
   def set_player

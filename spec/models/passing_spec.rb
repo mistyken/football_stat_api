@@ -11,4 +11,5 @@ RSpec.describe Passing, type: :model do
   it { should validate_presence_of(:tds) }
   it { should validate_presence_of(:cmp) }
   it { should validate_presence_of(:int) }
+  it { should validate_presence_of(:eid) }
 end

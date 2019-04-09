@@ -64,7 +64,7 @@ RSpec.describe 'Passings API' do
 
   # Test suite for POST /players/:player_id/passings
   describe 'POST /players/:player_id/passings' do
-    let(:valid_attributes) { { yds:12, att:12, tds:12, cmp:12, int:12 } }
+    let(:valid_attributes) { { yds:12, att:12, tds:12, cmp:12, int:12, eid:'asdf' } }
 
     context 'when request attributes are valid' do
       before { post "/players/#{player_id}/passings", params: valid_attributes }

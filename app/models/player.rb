@@ -6,7 +6,7 @@ class Player < ApplicationRecord
   has_many :Passing, dependent: :destroy
 
   # validations
-  validates_presence_of :name, :position, :pid, :eid
+  validates_presence_of :name, :position, :pid
 
   scope :by_player_name, -> (name) { where(name: name) if name.present? }
 end
