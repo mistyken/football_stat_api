@@ -5,12 +5,23 @@ module Response
   end
 
   def json_response_players(players)
-    player = players.first  # TODO: support multiple players
+    @rushing = []
+    @kicking = []
+    @passing = []
+    @receiving = []
+
+    players.each do |player|
+      @rushing.append json_response_rushing(player)
+      @kicking.append json_response_kicking(player)
+      @passing.append json_response_passing(player)
+      @receiving.append json_response_receiving(player)
+    end
+
     player_json = {
-        rushing: json_response_rushing(player),
-        kicking: json_response_kicking(player),
-        passing: json_response_passing(player),
-        receiving: json_response_receiving(player)
+        rushing: @rushing,
+        kicking: @kicking,
+        passing: @passing,
+        receiving: @receiving
     }
     render :json => player_json
   end

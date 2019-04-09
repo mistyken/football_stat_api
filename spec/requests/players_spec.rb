@@ -25,38 +25,41 @@ RSpec.describe 'Players API', type: :request do
     end
   end
 
-  # describe 'GET /players?name=' do
-  #   let!(:rushing) { create(:Rushing, player_id: player_id) }
-  #
-  #   context 'when looking for a specific player by name' do
-  #     before { get "/players?name=#{player_name}" }
-  #     it 'returns the player' do
-  #       expect(json.size).to eq(1)
-  #       expect(json.first['name']).to eq(player_name)
-  #       expect(json.first['Rushing']['yds']).to eq(rushing['yds'])
-  #       expect(json.first['Rushing']['att']).to eq(rushing['att'])
-  #       expect(json.first['Rushing']['tds']).to eq(rushing['tds'])
-  #       expect(json.first['Rushing']['fum']).to eq(rushing['fum'])
-  #     end
-  #
-  #     it 'returns status code 200' do
-  #       expect(response).to have_http_status(200)
-  #     end
-  #   end
-  #
-  #   context 'when looking for more than one player by name' do
-  #     let(:player_name_2) {players.last.name}
-  #     before { get "/players?name=#{player_name},#{player_name_2}"}
-  #     it 'returns two players' do
-  #       expect(json.size).to eq(2)
-  #     end
-  #
-  #     it 'should return two correct user names' do
-  #       expect(json.first['name']).to eq(player_name)
-  #       expect(json.last['name']).to eq(player_name_2)
-  #     end
-  #   end
-  # end
+  describe 'GET /players?name=' do
+    let!(:rushing) { create(:Rushing, player_id: player_id) }
+    let!(:kicking) { create(:Kicking, player_id: player_id) }
+    let!(:passing) { create(:Passing, player_id: player_id) }
+    let!(:receiving) { create(:Receiving, player_id: player_id) }
+
+    context 'when looking for a specific player by name' do
+      before { get "/players?name=#{player_name}" }
+      it 'returns the player rushing, kicking, passing, receiving stats' do
+        expect(json.size).to eq(4)
+        expect(json['rushing'].first['name']).to eq(player_name)
+        expect(json['rushing'].first['yds']).to eq(rushing['yds'])
+        expect(json['rushing'].first['att']).to eq(rushing['att'])
+        expect(json['rushing'].first['tds']).to eq(rushing['tds'])
+        expect(json['rushing'].first['fum']).to eq(rushing['fum'])
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    # context 'when looking for more than one player by name' do
+    #   let(:player_name_2) {players.last.name}
+    #   before { get "/players?name=#{player_name},#{player_name_2}"}
+    #   it 'returns two players' do
+    #     expect(json.size).to eq(2)
+    #   end
+    #
+    #   it 'should return two correct user names' do
+    #     expect(json.first['name']).to eq(player_name)
+    #     expect(json.last['name']).to eq(player_name_2)
+    #   end
+    # end
+  end
 
   # Test suite for GET /players/:id
   describe 'GET /players/:id' do
