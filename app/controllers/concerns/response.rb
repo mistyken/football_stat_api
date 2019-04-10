@@ -11,10 +11,25 @@ module Response
     @receiving = []
 
     players.each do |player|
-      @rushing.append json_response_rushing(player)
-      @kicking.append json_response_kicking(player)
-      @passing.append json_response_passing(player)
-      @receiving.append json_response_receiving(player)
+      rushing = json_response_rushing(player)
+      if rushing
+        @rushing.append rushing
+      end
+
+      passing = json_response_passing(player)
+      if passing
+        @passing.append passing
+      end
+
+      kicking = json_response_kicking(player)
+      if kicking
+        @kicking.append kicking
+      end
+
+      receiving = json_response_receiving(player)
+      if receiving
+        @receiving.append receiving
+      end
     end
 
     player_json = {
@@ -27,7 +42,8 @@ module Response
   end
 
   def json_response_rushing(player)
-    player.Rushing.map do |rushing|
+    rushing = player.Rushing.last
+    if rushing
       {
           player_id: player.pid,
           entry_id: rushing.eid,
@@ -42,7 +58,8 @@ module Response
   end
 
   def json_response_kicking(player)
-    player.Kicking.map do |kicking|
+    kicking = player.Kicking.last
+    if kicking
       {
           player_id: player.pid,
           entry_id: kicking.eid,
@@ -57,7 +74,8 @@ module Response
   end
 
   def json_response_passing(player)
-    player.Passing.map do |passing|
+    passing = player.Passing.last
+    if passing
       {
           player_id: player.pid,
           entry_id: passing.eid,
@@ -73,7 +91,8 @@ module Response
   end
 
   def json_response_receiving(player)
-    player.Receiving.map do |receiving|
+    receiving = player.Receiving.last
+    if receiving
       {
           player_id: player.pid,
           entry_id: receiving.eid,

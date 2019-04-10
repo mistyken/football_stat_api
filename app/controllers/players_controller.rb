@@ -5,7 +5,7 @@ class PlayersController < ApplicationController
   def index
     if params[:name]
       @names = params[:name].split(',')
-      @players = Player.send("by_player_name", @names)
+      @players = Player.by_player_name @names
       json_response_players(@players)
     else
       @players = Player.all
