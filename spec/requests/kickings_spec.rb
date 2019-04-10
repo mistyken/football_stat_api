@@ -85,6 +85,14 @@ RSpec.describe 'Kickings API' do
         expect(response.body).to match(/Fld goals made can't be blank, Extra pt att can't be blank/)
       end
     end
+
+    context 'when an request with existing eid' do
+      before { post "/players/#{player_id}/kickings", params: valid_attributes }
+      before { get "/players/#{player_id}/kickings" }
+      it 'should not create another entry' do
+        expect(json.size).to eq(21)
+      end
+    end
   end
 
   # Test suite for PUT /players/:player_id/kickings/:id
