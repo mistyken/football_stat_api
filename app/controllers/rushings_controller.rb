@@ -33,7 +33,7 @@ class RushingsController < ApplicationController
   private
 
   def rushing_params
-    params.permit(:yds, :att, :tds, :fum)
+    params.permit(:yds, :att, :tds, :fum, :eid)
   end
 
   def set_player

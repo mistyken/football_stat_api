@@ -5,7 +5,9 @@ RSpec.describe 'Players API', type: :request do
   # initialize test data
   let!(:players) {create_list(:Player, 10)}
   let(:player_id) {players.first.id}
+  let(:player_pid) {players.first.pid}
   let(:player_name) {players.first.name}
+  let(:player_position) {players.first.position}
 
   # Test suite for GET /players
   describe 'GET /players' do
@@ -27,20 +29,74 @@ RSpec.describe 'Players API', type: :request do
 
   describe 'GET /players?name=' do
     let!(:rushing) { create(:Rushing, player_id: player_id) }
-    before { get "/players?name=#{player_name}" }
+    let!(:kicking) { create(:Kicking, player_id: player_id) }
+    let!(:passing) { create(:Passing, player_id: player_id) }
+    let!(:receiving) { create(:Receiving, player_id: player_id) }
+
+    let(:player_id_2) {players.last.id}
+    let(:player_pid_2) {players.last.pid}
+    let(:player_name_2) {players.last.name}
+    let!(:rushing_2) { create(:Rushing, player_id: player_id_2) }
 
     context 'when looking for a specific player by name' do
-      it 'returns the player' do
-        expect(json.size).to eq(1)
-        expect(json.first['name']).to eq(player_name)
-        expect(json.first['Rushing'][0]['yds']).to eq(rushing['yds'])
-        expect(json.first['Rushing'][0]['att']).to eq(rushing['att'])
-        expect(json.first['Rushing'][0]['tds']).to eq(rushing['tds'])
-        expect(json.first['Rushing'][0]['fum']).to eq(rushing['fum'])
+      before { get "/players?name=#{player_name}" }
+      it 'returns the player rushing, kicking, passing, receiving stats' do
+        expect(json.size).to eq(4)
+        expect(json['rushing'].first['name']).to eq(player_name)
+        expect(json['rushing'].first['player_id']).to eq(player_pid)
+        expect(json['rushing'].first['position']).to eq(player_position)
+        expect(json['rushing'].first['yds']).to eq(rushing['yds'])
+        expect(json['rushing'].first['att']).to eq(rushing['att'])
+        expect(json['rushing'].first['tds']).to eq(rushing['tds'])
+        expect(json['rushing'].first['fum']).to eq(rushing['fum'])
+        expect(json['rushing'].first['entry_id']).to eq(rushing['eid'])
+
+        expect(json['receiving'].first['name']).to eq(player_name)
+        expect(json['receiving'].first['player_id']).to eq(player_pid)
+        expect(json['receiving'].first['position']).to eq(player_position)
+        expect(json['receiving'].first['yds']).to eq(receiving['yds'])
+        expect(json['receiving'].first['rec']).to eq(receiving['rec'])
+        expect(json['receiving'].first['tds']).to eq(receiving['tds'])
+        expect(json['receiving'].first['entry_id']).to eq(receiving['eid'])
+
+        expect(json['kicking'].first['name']).to eq(player_name)
+        expect(json['kicking'].first['player_id']).to eq(player_pid)
+        expect(json['kicking'].first['position']).to eq(player_position)
+        expect(json['kicking'].first['fld_goals_made']).to eq(kicking['fld_goals_made'])
+        expect(json['kicking'].first['fld_goals_att']).to eq(kicking['fld_goals_att'])
+        expect(json['kicking'].first['extra_pt_made']).to eq(kicking['extra_pt_made'])
+        expect(json['kicking'].first['entry_id']).to eq(kicking['eid'])
+
+        expect(json['passing'].first['name']).to eq(player_name)
+        expect(json['passing'].first['player_id']).to eq(player_pid)
+        expect(json['passing'].first['position']).to eq(player_position)
+        expect(json['passing'].first['yds']).to eq(passing['yds'])
+        expect(json['passing'].first['att']).to eq(passing['att'])
+        expect(json['passing'].first['tds']).to eq(passing['tds'])
+        expect(json['passing'].first['cmp']).to eq(passing['cmp'])
+        expect(json['passing'].first['int']).to eq(passing['int'])
+        expect(json['passing'].first['entry_id']).to eq(passing['eid'])
       end
 
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when looking for more than one player by name' do
+      before { get "/players?name=#{player_name},#{player_name_2}"}
+      it 'returns two players' do
+        expect(json['rushing'].size).to eq(2)
+      end
+
+      it 'should return two correct user names' do
+        expect(json['rushing'].last['name']).to eq(player_name_2)
+        expect(json['rushing'].last['player_id']).to eq(player_pid_2)
+        expect(json['rushing'].last['entry_id']).to eq(rushing_2['eid'])
+
+        expect(json['rushing'].first['name']).to eq(player_name)
+        expect(json['rushing'].first['player_id']).to eq(player_pid)
+        expect(json['rushing'].first['entry_id']).to eq(rushing['eid'])
       end
     end
   end
@@ -76,7 +132,7 @@ RSpec.describe 'Players API', type: :request do
   # Test suite for POST /players
   describe 'POST /players' do
     # valid payload
-    let(:valid_attributes) {{name: 'Kenneth Chen', position: 'QA', pid: 'ABCDE', eid: 'EFGHI'}}
+    let(:valid_attributes) {{name: 'Kenneth Chen', position: 'QA', pid: 'ABCDE'}}
 
     context 'when the request is valid' do
       before {post '/players', params: valid_attributes}
@@ -94,22 +150,22 @@ RSpec.describe 'Players API', type: :request do
       before {post '/players', params: valid_attributes}
       before {get '/players'}
 
-      it 'it should not create an additional player' do
+      it 'should not create an additional player' do
         expect(json.size).to eq(11)
       end
     end
 
     context 'when player with same pid is entered again' do
-      before {post '/players', params: {name: 'Jack Ma', position: 'QA', pid: 'ABCDE', eid: 'ETF'}}
+      before {post '/players', params: {name: 'Jack Ma', position: 'QA', pid: 'ABCDE'}}
       before {get '/players'}
 
-      it 'it should not create an additional player' do
+      it 'should not create an additional player' do
         expect(json.size).to eq(11)
       end
     end
 
     context 'when player with same eid is entered again' do
-      before {post '/players', params: {name: 'Jack Ma', position: 'QA', pid: 'ETF', eid: 'EFGHI'}}
+      before {post '/players', params: {name: 'Jack Ma', position: 'QA', pid: 'ETF'}}
       before {get '/players'}
 
       it 'it should not create an additional player' do
@@ -126,7 +182,7 @@ RSpec.describe 'Players API', type: :request do
 
       it 'returns a validation failure message' do
         expect(response.body)
-            .to match(/Validation failed: Position can't be blank, Pid can't be blank, Eid can't be blank/)
+            .to match(/Validation failed: Position can't be blank, Pid can't be blank/)
       end
     end
   end

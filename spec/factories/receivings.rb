@@ -5,5 +5,6 @@ FactoryBot.define do
     tds { Faker::Number.between(1, 100) }
     rec { Faker::Number.between(1, 100) }
     player_id { Faker::Number.between(1, 10000) }
+    eid {Faker::String::random(10)}
   end
 end

@@ -5,10 +5,103 @@ module Response
   end
 
   def json_response_players(players)
-    render :json => players.as_json(:only => [:pid, :eid, :name, :position],
-                                    :include => {:Rushing => {:only => [:yds, :att, :fum, :tds]},
-                                                 :Passing => {:only => [:yds, :att, :tds, :cmp, :int]},
-                                                 :Receiving => {:only => [:yds, :rec, :tds]},
-                                                 :Kicking => {:only => [:fld_goals_made, :fld_goals_att, :extra_pt_made, :extra_pt_att]}})
+    @rushing = []
+    @kicking = []
+    @passing = []
+    @receiving = []
+
+    players.each do |player|
+      rushing = json_response_rushing(player)
+      if rushing
+        @rushing.append rushing
+      end
+
+      passing = json_response_passing(player)
+      if passing
+        @passing.append passing
+      end
+
+      kicking = json_response_kicking(player)
+      if kicking
+        @kicking.append kicking
+      end
+
+      receiving = json_response_receiving(player)
+      if receiving
+        @receiving.append receiving
+      end
+    end
+
+    player_json = {
+        rushing: @rushing,
+        kicking: @kicking,
+        passing: @passing,
+        receiving: @receiving
+    }
+    render :json => player_json
+  end
+
+  def json_response_rushing(player)
+    rushing = player.Rushing.last
+    if rushing
+      {
+          player_id: player.pid,
+          entry_id: rushing.eid,
+          name: player.name,
+          position: player.position,
+          yds: rushing.yds,
+          att: rushing.att,
+          tds: rushing.tds,
+          fum: rushing.fum
+      }
+    end
+  end
+
+  def json_response_kicking(player)
+    kicking = player.Kicking.last
+    if kicking
+      {
+          player_id: player.pid,
+          entry_id: kicking.eid,
+          name: player.name,
+          position: player.position,
+          fld_goals_made: kicking.fld_goals_made,
+          fld_goals_att: kicking.fld_goals_att,
+          extra_pt_made: kicking.extra_pt_made,
+          extra_pt_att: kicking.extra_pt_att
+      }
+    end
+  end
+
+  def json_response_passing(player)
+    passing = player.Passing.last
+    if passing
+      {
+          player_id: player.pid,
+          entry_id: passing.eid,
+          name: player.name,
+          position: player.position,
+          yds: passing.yds,
+          att: passing.att,
+          tds: passing.tds,
+          cmp: passing.cmp,
+          int: passing.int
+      }
+    end
+  end
+
+  def json_response_receiving(player)
+    receiving = player.Receiving.last
+    if receiving
+      {
+          player_id: player.pid,
+          entry_id: receiving.eid,
+          name: player.name,
+          position: player.position,
+          yds: receiving.yds,
+          rec: receiving.rec,
+          tds: receiving.tds
+      }
+    end
   end
 end

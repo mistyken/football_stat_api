@@ -3,14 +3,20 @@ class PlayersController < ApplicationController
 
   # GET /players
   def index
-    @players = Player.by_player_name(params[:name])
-    json_response_players(@players)
+    if params[:name]
+      @names = params[:name].split(',')
+      @players = Player.by_player_name @names
+      json_response_players(@players)
+    else
+      @players = Player.all
+      json_response(@players)
+    end
   end
 
   # POST /players
   def create
-    @player = Player.where("name = ? OR pid = ? OR eid = ?",
-                       player_params[:name], player_params[:pid], player_params[:eid]).first_or_create!(player_params)
+    @player = Player.where("name = ? OR pid = ?",
+                       player_params[:name], player_params[:pid]).first_or_create!(player_params)
     json_response(@player, :created)
   end
 
@@ -35,7 +41,7 @@ class PlayersController < ApplicationController
 
   def player_params
     # whitelist params
-    params.permit(:name, :position, :pid, :eid)
+    params.permit(:name, :position, :pid)
   end
 
   def set_player

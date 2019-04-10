@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_034901) do
+ActiveRecord::Schema.define(version: 2019_04_09_004921) do
 
   create_table "kickings", force: :cascade do |t|
     t.string "fld_goals_made"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_034901) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "eid"
     t.index ["player_id"], name: "index_kickings_on_player_id"
   end
 
@@ -32,12 +33,12 @@ ActiveRecord::Schema.define(version: 2019_03_11_034901) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "eid"
     t.index ["player_id"], name: "index_passings_on_player_id"
   end
 
   create_table "players", force: :cascade do |t|
     t.string "pid"
-    t.string "eid"
     t.string "position"
     t.string "name"
     t.datetime "created_at", null: false
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_034901) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "eid"
     t.index ["player_id"], name: "index_receivings_on_player_id"
   end
 
@@ -62,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_034901) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "eid"
     t.index ["player_id"], name: "index_rushings_on_player_id"
   end
 

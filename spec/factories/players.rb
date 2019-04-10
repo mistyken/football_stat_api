@@ -4,6 +4,5 @@ FactoryBot.define do
     name { Faker::TvShows::StarTrek.character }
     position {Faker::TvShows::StarTrek.specie}
     pid {Faker::String::random(10)}
-    eid {Faker::String::random(10)}
   end
 end
