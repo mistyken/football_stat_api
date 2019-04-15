@@ -15,8 +15,7 @@ class PlayersController < ApplicationController
 
   # POST /players
   def create
-    @player = Player.where("name = ? OR pid = ?",
-                       player_params[:name], player_params[:pid]).first_or_create!(player_params)
+    @player = Player.where("pid = ?", player_params[:pid]).first_or_create!(player_params)
     json_response(@player, :created)
   end
 
@@ -45,10 +44,6 @@ class PlayersController < ApplicationController
   end
 
   def set_player
-    if params[:name]
-      @player = Player.by_player_name(params[:name]) if params[:name]
-    else
-      @player = Player.find(params[:id])
-    end
+    @player = Player.find(params[:id])
   end
 end
