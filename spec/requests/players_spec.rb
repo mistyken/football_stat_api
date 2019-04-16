@@ -180,40 +180,41 @@ RSpec.describe 'Players API', type: :request do
     end
 
     context 'when post to a new user with new passing stat' do
-      let(:new_player_with_passing_stat) {{passing:[{name: 'Kenneth 1', position: 'QA', pid: 'ABCDEF',
-                                           yds:12, att:12, tds:12, cmp:12, int:12, eid:'ABCDEF'}]}}
+      let(:new_player_with_passing_stat) {{name: 'Kenneth 1', position: 'QA', pid: 'ABCDEF',
+                                           yds:'12', att:'12', tds:'12', cmp:'12', int:'12', eid: 'ABCDEF'}}
 
       before {post '/players', params: new_player_with_passing_stat}
       before {get "/players?name=#{new_player_with_passing_stat['name']}"}
 
       it 'should return the player with passing stat' do
-        expect(json['passing'].first['name']).to eq(new_player_with_passing_stat['name'])
-        expect(json['passing'].first['player_id']).to eq(new_player_with_passing_stat['pid'])
-        expect(json['passing'].first['position']).to eq(new_player_with_passing_stat['position'])
-        expect(json['passing'].first['yds']).to eq(new_player_with_passing_stat['yds'])
-        expect(json['passing'].first['att']).to eq(new_player_with_passing_stat['att'])
-        expect(json['passing'].first['tds']).to eq(new_player_with_passing_stat['tds'])
-        expect(json['passing'].first['cmp']).to eq(new_player_with_passing_stat['cmp'])
-        expect(json['passing'].first['int']).to eq(new_player_with_passing_stat['int'])
-        expect(json['passing'].first['entry_id']).to eq(new_player_with_passing_stat['eid'])
+        expect(json['passing'].first['name']).to eq(new_player_with_passing_stat[:name])
+        expect(json['passing'].first['player_id']).to eq(new_player_with_passing_stat[:pid])
+        expect(json['passing'].first['position']).to eq(new_player_with_passing_stat[:position])
+        expect(json['passing'].first['yds']).to eq(new_player_with_passing_stat[:yds])
+        expect(json['passing'].first['att']).to eq(new_player_with_passing_stat[:att])
+        expect(json['passing'].first['tds']).to eq(new_player_with_passing_stat[:tds])
+        expect(json['passing'].first['cmp']).to eq(new_player_with_passing_stat[:cmp])
+        expect(json['passing'].first['int']).to eq(new_player_with_passing_stat[:int])
+        expect(json['passing'].first['entry_id']).to eq(new_player_with_passing_stat[:eid])
       end
     end
 
     context 'when post to an existing player with new rushing stat' do
-      let(:existing_player_with_rushing_stat) {{rushing:[valid_attributes.merge({yds:1, att:1, tds:1, fum:1, eid:'ABCDEF'})]}}
+      let(:existing_player_with_rushing_stat) {valid_attributes.merge({yds: '1', att:'1', tds:'1', fum:'1', eid: 'ABCDEF'})}
 
+      before {post '/players', params: valid_attributes}
       before {post '/players', params: existing_player_with_rushing_stat}
-      before {get "/players?name=#{existing_player_with_rushing_stat['name']}"}
+      before {get "/players?name=#{existing_player_with_rushing_stat[:name]}"}
 
       it 'should return the player with rushing stat' do
-        expect(json['rushing'].first['name']).to eq(existing_player_with_rushing_stat['name'])
-        expect(json['rushing'].first['player_id']).to eq(existing_player_with_rushing_stat['pid'])
-        expect(json['rushing'].first['position']).to eq(existing_player_with_rushing_stat['position'])
-        expect(json['rushing'].first['yds']).to eq(existing_player_with_rushing_stat['yds'])
-        expect(json['rushing'].first['att']).to eq(existing_player_with_rushing_stat['att'])
-        expect(json['rushing'].first['tds']).to eq(existing_player_with_rushing_stat['tds'])
-        expect(json['rushing'].first['fum']).to eq(existing_player_with_rushing_stat['fum'])
-        expect(json['rushing'].first['entry_id']).to eq(existing_player_with_rushing_stat['eid'])
+        expect(json['rushing'].first['name']).to eq(existing_player_with_rushing_stat[:name])
+        expect(json['rushing'].first['player_id']).to eq(existing_player_with_rushing_stat[:pid])
+        expect(json['rushing'].first['position']).to eq(existing_player_with_rushing_stat[:position])
+        expect(json['rushing'].first['yds']).to eq(existing_player_with_rushing_stat[:yds])
+        expect(json['rushing'].first['att']).to eq(existing_player_with_rushing_stat[:att])
+        expect(json['rushing'].first['tds']).to eq(existing_player_with_rushing_stat[:tds])
+        expect(json['rushing'].first['fum']).to eq(existing_player_with_rushing_stat[:fum])
+        expect(json['rushing'].first['entry_id']).to eq(existing_player_with_rushing_stat[:eid])
       end
     end
 

@@ -4,7 +4,7 @@ module Response
     render json: object, status: status
   end
 
-  def json_response_players(players)
+  def json_response_players(players, status = :ok)
     @rushing = []
     @kicking = []
     @passing = []
@@ -38,7 +38,7 @@ module Response
         passing: @passing,
         receiving: @receiving
     }
-    render :json => player_json
+    render :json => player_json, status: status
   end
 
   def json_response_rushing(player)

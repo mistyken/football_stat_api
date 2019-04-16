@@ -16,6 +16,15 @@ class PlayersController < ApplicationController
   # POST /players
   def create
     @player = Player.where("pid = ?", player_params[:pid]).first_or_create!(player_params)
+    if params[:cmp]
+      @player.Passing.create!(passing_params)
+    elsif params[:fld_goals_made]
+      @player.Kicking.create!(kicking_params)
+    elsif params[:rec]
+      @player.Receiving.create!(receiving_params)
+    elsif params[:fum]
+      @player.Rushing.create!(rushing_params)
+    end
     json_response(@player, :created)
   end
 
@@ -40,7 +49,23 @@ class PlayersController < ApplicationController
 
   def player_params
     # whitelist params
-    params.permit(:name, :position, :pid)
+    params.permit(:name, :position, :pid, kicking_params, passing_params, receiving_params, rushing_params)
+  end
+
+  def kicking_params
+    params.permit(:fld_goals_made, :fld_goals_att, :extra_pt_made, :extra_pt_att, :eid)
+  end
+
+  def passing_params
+    params.permit(:yds, :att, :tds, :cmp, :int, :eid)
+  end
+
+  def receiving_params
+    params.permit(:yds, :tds, :rec, :eid)
+  end
+
+  def rushing_params
+    params.permit(:yds, :att, :tds, :fum, :eid)
   end
 
   def set_player
