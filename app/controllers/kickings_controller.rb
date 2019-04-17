@@ -14,7 +14,7 @@ class KickingsController < ApplicationController
 
   # POST /players/:player_id/kickings
   def create
-    @player.Kicking.create!(kicking_params)
+    @player.Kicking.where("entry_id = ?", kicking_params[:entry_id]).first_or_create!(kicking_params)
     json_response(@player, :created)
   end
 

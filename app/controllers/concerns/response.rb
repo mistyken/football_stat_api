@@ -41,6 +41,8 @@ module Response
     render :json => player_json, status: status
   end
 
+  private
+
   def json_response_rushing(player)
     rushing = player.Rushing.last
     if rushing

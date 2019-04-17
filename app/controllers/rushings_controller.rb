@@ -14,7 +14,7 @@ class RushingsController < ApplicationController
 
   # POST /players/:player_id/rushings
   def create
-    @player.Rushing.create!(rushing_params)
+    @player.Rushing.where("entry_id = ?", rushing_params[:entry_id]).first_or_create!(rushing_params)
     json_response(@player, :created)
   end
 

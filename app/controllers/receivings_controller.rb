@@ -14,7 +14,7 @@ class ReceivingsController < ApplicationController
 
   # POST /players/:player_id/receivings
   def create
-    @player.Receiving.create!(receiving_params)
+    @player.Receiving.where("entry_id = ?", receiving_params[:entry_id]).first_or_create!(receiving_params)
     json_response(@player, :created)
   end
 
