@@ -41,12 +41,14 @@ module Response
     render :json => player_json, status: status
   end
 
+  private
+
   def json_response_rushing(player)
     rushing = player.Rushing.last
     if rushing
       {
-          player_id: player.pid,
-          entry_id: rushing.eid,
+          player_id: player.player_id,
+          entry_id: rushing.entry_id,
           name: player.name,
           position: player.position,
           yds: rushing.yds,
@@ -61,8 +63,8 @@ module Response
     kicking = player.Kicking.last
     if kicking
       {
-          player_id: player.pid,
-          entry_id: kicking.eid,
+          player_id: player.player_id,
+          entry_id: kicking.entry_id,
           name: player.name,
           position: player.position,
           fld_goals_made: kicking.fld_goals_made,
@@ -77,8 +79,8 @@ module Response
     passing = player.Passing.last
     if passing
       {
-          player_id: player.pid,
-          entry_id: passing.eid,
+          player_id: player.player_id,
+          entry_id: passing.entry_id,
           name: player.name,
           position: player.position,
           yds: passing.yds,
@@ -94,8 +96,8 @@ module Response
     receiving = player.Receiving.last
     if receiving
       {
-          player_id: player.pid,
-          entry_id: receiving.eid,
+          player_id: player.player_id,
+          entry_id: receiving.entry_id,
           name: player.name,
           position: player.position,
           yds: receiving.yds,

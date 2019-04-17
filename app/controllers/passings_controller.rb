@@ -14,7 +14,7 @@ class PassingsController < ApplicationController
 
   # POST /players/:player_id/passings
   def create
-    @player.Passing.create!(passing_params)
+    @player.Passing.where("entry_id = ?", passing_params[:entry_id]).first_or_create!(passing_params)
     json_response(@player, :created)
   end
 
@@ -33,7 +33,7 @@ class PassingsController < ApplicationController
   private
 
   def passing_params
-    params.permit(:yds, :att, :tds, :cmp, :int, :eid)
+    params.permit(:yds, :att, :tds, :cmp, :int, :entry_id)
   end
 
   def set_player

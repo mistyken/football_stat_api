@@ -9,5 +9,5 @@ RSpec.describe Receiving, type: :model do
   it { should validate_presence_of(:yds) }
   it { should validate_presence_of(:tds) }
   it { should validate_presence_of(:rec) }
-  it { should validate_presence_of(:eid) }
+  it { should validate_presence_of(:entry_id) }
 end

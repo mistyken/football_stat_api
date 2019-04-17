@@ -10,5 +10,5 @@ RSpec.describe Rushing, type: :model do
   it { should validate_presence_of(:att) }
   it { should validate_presence_of(:tds) }
   it { should validate_presence_of(:fum) }
-  it { should validate_presence_of(:eid) }
+  it { should validate_presence_of(:entry_id) }
 end
