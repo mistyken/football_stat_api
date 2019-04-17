@@ -64,7 +64,7 @@ RSpec.describe 'Kickings API' do
 
   # Test suite for POST /players/:player_id/kickings
   describe 'POST /players/:player_id/kickings' do
-    let(:valid_attributes) { { fld_goals_made:11, fld_goals_att:11, extra_pt_made:11, extra_pt_att:11, eid:'asdf'} }
+    let(:valid_attributes) { { fld_goals_made:11, fld_goals_att:11, extra_pt_made:11, extra_pt_att:11, entry_id:'asdf'} }
 
     context 'when request attributes are valid' do
       before { post "/players/#{player_id}/kickings", params: valid_attributes }

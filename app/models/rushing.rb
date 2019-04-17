@@ -3,5 +3,5 @@ class Rushing < ApplicationRecord
   belongs_to :player
 
   # validation
-  validates_presence_of :yds, :att, :fum, :tds, :eid
+  validates_presence_of :yds, :att, :fum, :tds, :entry_id
 end

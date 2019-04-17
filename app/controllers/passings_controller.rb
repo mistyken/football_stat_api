@@ -33,7 +33,7 @@ class PassingsController < ApplicationController
   private
 
   def passing_params
-    params.permit(:yds, :att, :tds, :cmp, :int, :eid)
+    params.permit(:yds, :att, :tds, :cmp, :int, :entry_id)
   end
 
   def set_player

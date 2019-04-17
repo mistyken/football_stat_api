@@ -2,5 +2,5 @@ class Passing < ApplicationRecord
   belongs_to :player
 
   # validation
-  validates_presence_of :yds, :att, :tds, :cmp, :int, :eid
+  validates_presence_of :yds, :att, :tds, :cmp, :int, :entry_id
 end

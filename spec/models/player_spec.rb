@@ -9,7 +9,7 @@ RSpec.describe Player, type: :model do
   it { should have_many(:Receiving).dependent(:destroy) }
   # Validation tests
   # ensure columns pid, name and position are present before saving
-  it { should validate_presence_of(:pid) }
+  it { should validate_presence_of(:player_id) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:position) }
 end

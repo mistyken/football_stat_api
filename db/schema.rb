@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_171053) do
+ActiveRecord::Schema.define(version: 2019_04_17_050935) do
 
   create_table "kickings", force: :cascade do |t|
     t.string "fld_goals_made"
@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 2019_04_10_171053) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "eid"
-    t.index ["eid"], name: "index_kickings_on_eid", unique: true
+    t.string "entry_id"
+    t.index ["entry_id"], name: "index_kickings_on_entry_id", unique: true
     t.index ["player_id"], name: "index_kickings_on_player_id"
   end
 
@@ -34,18 +34,18 @@ ActiveRecord::Schema.define(version: 2019_04_10_171053) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "eid"
-    t.index ["eid"], name: "index_passings_on_eid", unique: true
+    t.string "entry_id"
+    t.index ["entry_id"], name: "index_passings_on_entry_id", unique: true
     t.index ["player_id"], name: "index_passings_on_player_id"
   end
 
   create_table "players", force: :cascade do |t|
-    t.string "pid"
+    t.string "player_id"
     t.string "position"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["pid"], name: "index_players_on_pid", unique: true
+    t.index ["player_id"], name: "index_players_on_player_id", unique: true
   end
 
   create_table "receivings", force: :cascade do |t|
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2019_04_10_171053) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "eid"
-    t.index ["eid"], name: "index_receivings_on_eid", unique: true
+    t.string "entry_id"
+    t.index ["entry_id"], name: "index_receivings_on_entry_id", unique: true
     t.index ["player_id"], name: "index_receivings_on_player_id"
   end
 
@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(version: 2019_04_10_171053) do
     t.integer "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "eid"
-    t.index ["eid"], name: "index_rushings_on_eid", unique: true
+    t.string "entry_id"
+    t.index ["entry_id"], name: "index_rushings_on_entry_id", unique: true
     t.index ["player_id"], name: "index_rushings_on_player_id"
   end
 

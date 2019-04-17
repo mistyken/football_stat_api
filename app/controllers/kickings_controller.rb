@@ -33,7 +33,7 @@ class KickingsController < ApplicationController
   private
 
   def kicking_params
-    params.permit(:fld_goals_made, :fld_goals_att, :extra_pt_made, :extra_pt_att, :eid)
+    params.permit(:fld_goals_made, :fld_goals_att, :extra_pt_made, :extra_pt_att, :entry_id)
   end
 
   def set_player
