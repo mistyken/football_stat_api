@@ -1,10 +1,16 @@
-version: 2.0
-jobs:
- build:
-   docker:
-     - image: circleci/ruby:2.3.6-stretch
+version: 2.0 # use CircleCI 2.0
+jobs: # a collection of steps
+ build: # runs not using Workflows must have a `build` job as entry point
+   docker: # run the steps with Docker
+     - image: circleci/ruby:2.3.6-stretch-node # ...with this image as the primary container; this is where all `steps` will run
+       environment: # environment variables for primary container
+            BUNDLE_PATH: vendor/bundle
+            RAILS_ENV: test
    steps:
      - checkout
+     - run:
+          name: Which bundler?
+          command: bundle -v
      - restore_cache:
                keys:
                  - deps-{{ checksum "Gemfile.lock" }}
@@ -13,5 +19,5 @@ jobs:
                key: deps-{{ checksum "Gemfile.lock" }}
                paths:
                  - vendor/bundle
-     - run: bundle exec rails db:migrate
+     - run: bundle exec rails db:create db:schema:load
      - run: bundle exec rspec
