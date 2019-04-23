@@ -5,17 +5,13 @@ jobs:
      - image: circleci/ruby:2.3.6-stretch
    steps:
      - checkout
-     - run:
-         name: Install build tools so we can install Gems
-         command: |
-           apt-get update && apt-get install -y --no-install-recommends \
-             build-essential \
-             libpq-dev \
-             libxml2-dev \
-             libxslt1-dev \
-           && rm -rf /var/lib/apt/lists/* \
-           && apt-get clean \
-           && apt-get purge
-     - run: bundle install
-     - run: bundle exec rails db:create db:schema:load
+     - restore_cache:
+               keys:
+                 - deps-{{ checksum "Gemfile.lock" }}
+     - run: bundle install --path vendor/bundle
+     - save_cache:
+               key: deps-{{ checksum "Gemfile.lock" }}
+               paths:
+                 - "vendor/bundle"
+     - run: bundle exec rails db:migrate
      - run: bundle exec rspec
