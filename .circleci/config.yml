@@ -1,15 +1,21 @@
-# Use the latest 2.1 version of CircleCI pipeline processing engine, see https://circleci.com/docs/2.0/configuration-reference/
-version: 2.1
-
-# Use a package of configuration called an orb, see https://circleci.com/docs/2.0/orb-intro/
-orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.3.1
-
-# Orchestrate or schedule a set of jobs, see https://circleci.com/docs/2.0/workflows/
-workflows:
-  # Name the workflow "Welcome"
-  Welcome:
-    # Run the welcome/run job in its own container
-    jobs:
-      - welcome/run
+version: 2.0
+jobs:
+ build:
+   docker:
+     - image: circleci/ruby:2.3.6-stretch
+   steps:
+     - checkout
+     - run:
+         name: Install build tools so we can install Gems
+         command: |
+           apt-get update && apt-get install -y --no-install-recommends \
+             build-essential \
+             libpq-dev \
+             libxml2-dev \
+             libxslt1-dev \
+           && rm -rf /var/lib/apt/lists/* \
+           && apt-get clean \
+           && apt-get purge
+     - run: bundle install
+     - run: bundle exec rails db:create db:schema:load
+     - run: bundle exec rspec
