@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/mistyken/football_stat_api/tree/master.svg?style=svg)](https://circleci.com/gh/mistyken/football_stat_api/tree/master)
+
 # README
 
 Sample API app to retrieve football player stats. 
